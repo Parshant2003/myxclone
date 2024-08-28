@@ -32,7 +32,7 @@ const Login = () => {
           toast.success(res.data.message);
         }
       } catch (error) {
-        toast.success(error.response.data.message);
+        toast.success("Login failed ");
         console.log(error);
       }
     } else {
@@ -49,7 +49,7 @@ const Login = () => {
           toast.success(res.data.message);
         }
       } catch (error) {
-        toast.success(error.response.data.message);
+        toast.success("Sign up failed");
         console.log(error);
       }
     }
