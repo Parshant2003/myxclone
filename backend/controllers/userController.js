@@ -177,3 +177,32 @@ export const unfollow = async (req,res) => {
         console.log(error);
     }
 }
+
+export const update = async (req,res) =>  {
+    try {
+        const { name, username, bio } = req.body;
+        
+        const userId = req.params.id; // Assumes `req.user` is set by authentication middleware
+        
+        
+        // Validate input
+        if (!name || !username) {
+            return res.status(400).json({ message: 'Name and username are required.' });
+        }
+
+        // Update the user
+        const updatedUser = await User.findByIdAndUpdate(userId, { name, username, bio }, { new: true });
+        console.log(updatedUser);
+        
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+         
+        res.status(200).json({ message: 'Profile updated successfully.', user: updatedUser });
+        console.log(updatedUser);
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error.' });
+    }
+};

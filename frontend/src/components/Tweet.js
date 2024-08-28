@@ -29,6 +29,21 @@ const Tweet = ({ tweet }) => {
             console.log(error);
         }
     }
+    const bookmarkOrRemoveHandler = async (id) => {
+        try {
+            const res = await axios.put(`${TWEET_API_END_POINT}/bookmark/${id}`, { id: user?._id }, {
+                withCredentials: true
+            });
+            console.log(res);
+            dispatch(getRefresh());
+            toast.success(res.data.message);
+    
+        } catch (error) {
+            toast.error(error.response.data.message);
+            console.log(error);
+        }
+    };
+    
     const deleteTweetHandler = async (id) => {
         try {
             axios.defaults.withCredentials = true;
@@ -55,12 +70,7 @@ const Tweet = ({ tweet }) => {
                             <p>{tweet?.description}</p>
                         </div>
                         <div className='flex justify-between my-3'>
-                            <div className='flex items-center'>
-                                <div className='p-2 hover:bg-green-200 rounded-full cursor-pointer'>
-                                    <FaRegComment size="20px" />
-                                </div>
-                                <p>0</p>
-                            </div>
+                          
                             <div className='flex items-center'>
                                 <div onClick={() => likeOrDislikeHandler(tweet?._id)} className='p-2 hover:bg-pink-200 rounded-full cursor-pointer'>
                                     <CiHeart size="24px" />
@@ -68,11 +78,11 @@ const Tweet = ({ tweet }) => {
                                 </div>
                                 <p>{tweet?.like?.length}</p>
                             </div>
-                            <div className='flex items-center'>
+                            <div onClick={() => bookmarkOrRemoveHandler(tweet?._id)} className='flex items-center'>
                                 <div className='p-2 hover:bg-yellow-200 rounded-full cursor-pointer'>
                                     <CiBookmark size="24px" />
                                 </div>
-                                <p>0</p>
+                                <p>{tweet?.bookmark?.length}</p>
                             </div>
                             {
                                 user?._id === tweet?.userId && (

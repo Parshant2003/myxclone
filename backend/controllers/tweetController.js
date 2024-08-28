@@ -59,6 +59,33 @@ export const likeOrDislike = async (req,res) => {
         console.log(error);
     }
 };
+
+export const bookmarkOrRemove = async (req, res) => {
+    try {
+        const loggedInUserId = req.body.id;  // Get the user ID from the request body
+        const tweetId = req.params.id;  // Get the tweet ID from the request parameters
+        const tweet = await Tweet.findById(tweetId);  // Find the tweet by its ID
+
+        if (tweet.bookmark.includes(loggedInUserId)) {
+            // If the user has already bookmarked the tweet, remove the bookmark
+            await Tweet.findByIdAndUpdate(tweetId, { $pull: { bookmark: loggedInUserId } });
+            return res.status(200).json({
+                message: "Bookmark removed from the tweet."
+            });
+        } else {
+            // If the user hasn't bookmarked the tweet, add the bookmark
+            await Tweet.findByIdAndUpdate(tweetId, { $push: { bookmark: loggedInUserId } });
+            return res.status(200).json({
+                message: "Tweet bookmarked successfully."
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "An error occurred while processing your request."
+        });
+    }
+};
 export const getAllTweets = async (req,res) => {
     // loggedInUser ka tweet + following user tweet
     try {

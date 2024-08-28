@@ -22,6 +22,7 @@ const Profile = () => {
             try {
                 axios.defaults.withCredentials = true;
                 const res = await axios.post(`${USER_API_END_POINT}/unfollow/${id}`, {id:user?._id});
+                console.log(res);
                 dispatch(followingUpdate(id));
                 dispatch(getRefresh());
                 toast.success(res.data.message);
@@ -35,6 +36,7 @@ const Profile = () => {
             try {
                 axios.defaults.withCredentials = true;
                 const res = await axios.post(`${USER_API_END_POINT}/follow/${id}`, {id:user?._id});
+                console.log(res);
                 dispatch(followingUpdate(id));
                 dispatch(getRefresh());
                 toast.success(res.data.message);
@@ -46,7 +48,7 @@ const Profile = () => {
     }
 
     return (
-        <div className='w-[50%] border-l border-r border-gray-200'>
+        <div className='w-[55%] border-l border-r border-b border-gray-200'>
             <div>
                 <div className='flex items-center py-2'>
                     <Link to="/" className='p-2 rounded-full hover:bg-gray-100 hover:cursor-pointer'>
@@ -64,8 +66,11 @@ const Profile = () => {
                 <div className='text-right m-4'>
                     {
                         profile?._id === user?._id ? (
+                            <Link to="/update">
                             <button className='px-4 py-1 hover:bg-gray-200 rounded-full border border-gray-400'>Edit Profile</button>
 
+                            </Link>
+                            
                         ) : (
                             <button onClick={followAndUnfollowHandler} className='px-4 py-1 bg-black text-white rounded-full'>{user.following.includes(id) ? "Following" : "Follow"}</button>
                         )
@@ -76,7 +81,9 @@ const Profile = () => {
                     <p>{`@${profile?.username}`}</p>
                 </div>
                 <div className='m-4 text-sm'>
-                    <p>🌐 Exploring the web's endless possibilities with MERN Stack 🚀 | Problem solver by day, coder by night 🌙 | Coffee lover ☕ | Join me on this coding journey!</p>
+                    <p>{user?.bio}
+
+                    </p>
                 </div>
             </div>
         </div>
