@@ -22,7 +22,6 @@ const Profile = () => {
             try {
                 axios.defaults.withCredentials = true;
                 const res = await axios.post(`${USER_API_END_POINT}/unfollow/${id}`, {id:user?._id});
-                console.log(res);
                 dispatch(followingUpdate(id));
                 dispatch(getRefresh());
                 toast.success(res.data.message);
@@ -36,7 +35,6 @@ const Profile = () => {
             try {
                 axios.defaults.withCredentials = true;
                 const res = await axios.post(`${USER_API_END_POINT}/follow/${id}`, {id:user?._id});
-                console.log(res);
                 dispatch(followingUpdate(id));
                 dispatch(getRefresh());
                 toast.success(res.data.message);
