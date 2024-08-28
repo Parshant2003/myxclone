@@ -19,7 +19,7 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-    origin: "http://localhost:3000",  // Replace with your frontend origin
+    origin: process.env.URL,  // Replace with your frontend origin
     credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
