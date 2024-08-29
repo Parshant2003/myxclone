@@ -8,7 +8,7 @@ following, express appreciation through likes, and stay updated
 with a personalized feed of followed user’s posts.
 
 
-
+#Deploy:https://myxclone.onrender.com
 # SignUp
 ![Screenshot 2024-08-12 at 21-49-51 React App](https://github.com/user-attachments/assets/c0b518ea-8d02-4da8-9af8-d4246d398338)
 # Login
